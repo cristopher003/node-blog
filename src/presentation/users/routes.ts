@@ -16,10 +16,15 @@ static get routes():Router{
     const usersController=new UsersController(userReposytory);
 
     routes.get('/',usersController.getUsers);
-    routes.get('/:id',usersController.getUserById);
-    routes.post('/',usersController.createUser);
-    routes.put('/:id',usersController.updateUser);
-    routes.delete('/:id',usersController.deleteUser);
+    routes.post('/login',usersController.login);
+
+    // todo
+    // configurar estas rutas
+    // routes.get('/:id',usersController.getUserById);
+    // routes.post('/',usersController.createUser);
+    // routes.put('/:id',usersController.updateUser);
+    // routes.delete('/:id',usersController.deleteUser);
+
 
     return routes;
     }

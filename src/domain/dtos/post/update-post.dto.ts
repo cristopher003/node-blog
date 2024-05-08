@@ -4,7 +4,10 @@ export class UpdatePostDto{
     public readonly   id  :   number,
     public readonly   title  :   string,
     public readonly content :  string,
-    public readonly published  :boolean 
+    public readonly published  :boolean,
+    public readonly categories:string[],
+    public readonly tags:string[],
+    public readonly authorId:number
   ){
     }
 
@@ -14,17 +17,19 @@ export class UpdatePostDto{
       returnObj.title=this.title;
       returnObj.content=this.content;
       returnObj.published=this.published;
-     
+      returnObj.categories=this.categories;
+      returnObj.tags=this.tags;
+      returnObj.authorId=this.authorId;
       return returnObj;
     }
   
 
  public static create(props:{[key:string]:any}):[string?,UpdatePostDto?]{
 
-    const{id,title,content,published}=props;
+    const{id,title,content,published,categories,tags,authorId}=props;
 
     // implement validaciones
-
-    return[undefined,new UpdatePostDto(id,title,content,published)];
+// validar id
+    return[undefined,new UpdatePostDto(id,title,content,published,categories,tags,authorId)];
  }
 }

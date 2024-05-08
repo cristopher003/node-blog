@@ -27,9 +27,12 @@ export class Server{
         //Routes
 
         this.app.use(this.routes);
+        this.app.use((req, res) => {
+            res.status(404).send('Ruta no encontrada');
+        });
 
         this.app.listen(this.port,()=>{
-         console.log("hola");     
+         console.log("server runing");     
         });
     }
 }

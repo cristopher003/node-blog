@@ -7,6 +7,7 @@ export abstract class UserDataSource{
     abstract create(createUserDto:CreateUserDto):Promise<UserEntity>;
     abstract getAll():Promise<UserEntity[]>;
     abstract findById(id:number):Promise<UserEntity>;
+    abstract findByEmail(email:string):Promise<UserEntity | null> ;
     abstract updateById(updateUserDto:UpdateUserDto):Promise<UserEntity>;
     abstract deleteById(id:number):Promise<UserEntity>;
 

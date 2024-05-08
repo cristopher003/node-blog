@@ -6,11 +6,12 @@ constructor(
     public id:string,
     public email:string,
     public name:string,
+    public password:string,
 ){  }
 
 public static fromJson(object:{[key:string]:any}):UserEntity{
-    const {id,email,name}=object;
+    const {id,email,name,password}=object;
     // validaciones 
-   return new UserEntity(id,email,name);
+   return new UserEntity(id,email,name,password);
 }
 }

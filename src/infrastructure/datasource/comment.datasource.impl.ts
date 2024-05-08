@@ -26,14 +26,14 @@ export class CommentDataSourceImp implements CommentDataSource {
             where:{id}
         });
 
-        if (!comment) throw 'Post with id not found';
+        if (!comment) throw 'Comment with id not found';
         return CommentEntity.fromJson(comment);
 
     }
 
    async updateById(updateCommentDto: UpdateCommentDto): Promise<CommentEntity> {
        await this.findById(updateCommentDto.id);
-       const updateComment=prisma.comment.update({
+       const updateComment=await prisma.comment.update({
         where:{id:updateCommentDto.id},
         data:updateCommentDto.values
     });

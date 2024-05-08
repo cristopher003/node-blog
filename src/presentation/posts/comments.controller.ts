@@ -11,8 +11,7 @@ export class CommentsController{
     }
 
     public getComments=async (req:Request,resp:Response)=> {
-        console.log("aaaaa");
-        
+  
         const comment= await this.commentRepository.getAll();
         resp.json(comment);
     }
@@ -30,25 +29,35 @@ export class CommentsController{
     public createComment=async (req:Request,resp:Response)=>{
         const [error,createCommentDto]=CreateCommentDto.create(req.body);  
         if (error) return resp.status(400).json({error});
-      
+      try {
         const post= await this.commentRepository.create(createCommentDto!);
-    
-        resp.json(post);
+        resp.json(post) 
+      } catch (error) {
+        resp.status(400).json(error);
+      };
     }
 
-    public updateComment=(req:Request,resp:Response)=>{
+    public updateComment=async(req:Request,resp:Response)=>{
         const id=+req.params.id
         const [error,updateCommentDto]=UpdateCommentDto.create({...req.body,id}); 
         if (error) return resp.status(400).json({error});
-     
-        const updatePost=this.commentRepository.updateById(updateCommentDto!);
-
-       return resp.json(updatePost);
+        try {
+            const updatePost= await this.commentRepository.updateById(updateCommentDto!);
+            return resp.json(updatePost); 
+        } catch (error) {
+            resp.status(400).json(error);
+        }
+   
     }
 
-    public deleteComment=(req:Request,resp:Response)=>{
+    public deleteComment=async(req:Request,resp:Response)=>{
         const id=+req.params.id
-        const post=this.commentRepository.deleteById(id);
-        return resp.json(post);
+        try {
+            const comment=await this.commentRepository.deleteById(id);
+            return resp.json(comment); 
+        } catch (error) {
+            resp.status(400).json(error); 
+        }
+   
     }
 }

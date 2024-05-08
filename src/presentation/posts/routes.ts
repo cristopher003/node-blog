@@ -5,6 +5,7 @@ import { PostRepositoryImpl } from "../../infrastructure/repositories/post.repos
 import { CommentRepositoryImpl } from "../../infrastructure/repositories/comment.repository.impl";
 import { CommentDataSourceImp } from "../../infrastructure/datasource/comment.datasource.impl";
 import { CommentsController } from "./comments.controller";
+import { AuthMiddleware } from "../middlewares/auth.middleware";
 
 
 export class PostRoutes{
@@ -21,15 +22,26 @@ static get routes():Router{
     const commentReposytory= new CommentRepositoryImpl(commentDataSource);
     const commentsController=new CommentsController(commentReposytory);
 
-    // routes.get('/',postsController.getPost);
-    // routes.get('/:id',postsController.getPostById);
-    // routes.post('/',postsController.createPost);
-    // routes.put('/:id',postsController.updatePost);
-    // routes.delete('/:id',postsController.deletePost);
 
-    routes.get('/comments',commentsController.getComments);
-    routes.get('/comments/:id',commentsController.getCommentById);
 
+    routes.get('/',[ AuthMiddleware.validateJWT ],postsController.getPost);
+    // routes.get('/',[ authMiddleware.validateJWT ],postsController.getPost);
+    routes.get('/:id',[ AuthMiddleware.validateJWT ],postsController.getPostById);
+    routes.post('/',[ AuthMiddleware.validateJWT ],postsController.createPost);
+    routes.put('/:id',[ AuthMiddleware.validateJWT ],postsController.updatePost);
+    routes.delete('/:id',[ AuthMiddleware.validateJWT ],postsController.deletePost);
+
+    // definir /categories
+    // definir /tag 
+    routes.get('/tags/:tag', [AuthMiddleware.validateJWT], postsController.getPostsByTag);
+    routes.get('/categories/:category', [AuthMiddleware.validateJWT], postsController.getPostsByCategory);
+
+    routes.post('/comment',commentsController.createComment);
+    routes.get('/comment/:id',commentsController.getCommentById);
+    routes.put('/comment/:id',commentsController.updateComment);
+    routes.delete('/comment/:id',commentsController.deleteComment);
+  
+    
 
     return routes;
     }

@@ -33,19 +33,41 @@ export class PostsController{
         resp.json(post);
     }
 
-    public updatePost=(req:Request,resp:Response)=>{
+    public updatePost=async (req:Request,resp:Response)=>{
         const id=+req.params.id
         const [error,updatePostDto]=UpdatePostDto.create({...req.body,id}); 
         if (error) return resp.status(400).json({error});
+    
+        const updatePost= await this.postRepositiry.updateById(updatePostDto!);
      
-        const updatePost=this.postRepositiry.updateById(updatePostDto!);
-
        return resp.json(updatePost);
     }
 
-    public deletePost=(req:Request,resp:Response)=>{
+    public deletePost=async(req:Request,resp:Response)=>{
         const id=+req.params.id
-        const post=this.postRepositiry.deleteById(id);
+        const post=await this.postRepositiry.deleteById(id);
         return resp.json(post);
+    }
+
+    public getPostsByTag=async(req:Request,resp:Response)=>{
+        const tag=req.params.tag;
+
+        try {
+            const posts= await this.postRepositiry.findByTag(tag);
+
+            return resp.json(posts);
+        } catch (error) {
+            resp.status(400).json(error);
+        }
+    }
+
+    public getPostsByCategory=async(req:Request,resp:Response)=>{
+        const category=req.params.category
+        try {
+            const post= await this.postRepositiry.findByCategory(category);
+            return resp.json(post);
+        } catch (error) {
+            resp.status(400).json(error);
+        }
     }
 }

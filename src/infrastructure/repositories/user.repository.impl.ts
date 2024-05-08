@@ -17,6 +17,9 @@ export class UserRepositoryImpl implements UserRepository{
     findById(id: number): Promise<UserEntity> {
         return this.datasource.findById(id);
     }
+    findByEmail(email: string): Promise<UserEntity | null> {
+        return this.datasource.findByEmail(email);
+    }
     updateById(updateUserDto: UpdateUserDto): Promise<UserEntity> {
         return this.datasource.updateById(updateUserDto);
     }

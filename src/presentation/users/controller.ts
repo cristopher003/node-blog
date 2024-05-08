@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { UserRepository } from "../../domain/repositories/user.repository";
 import { CreateUserDto, UpdateUserDto } from "../../domain/dtos";
+import { AuthService } from "../../infrastructure/services/auth.services";
 
 
 export class UsersController{
@@ -27,9 +28,8 @@ export class UsersController{
     public createUser=async (req:Request,resp:Response)=>{
         const [error,createUserDto]=CreateUserDto.create(req.body);  
         if (error) return resp.status(400).json({error});
-      
-        const post= await this.userRepository.create(createUserDto!);
-    
+        const authService= new AuthService(this.userRepository);
+        const post= await authService.register(createUserDto!);
         resp.json(post);
     }
 
@@ -45,7 +45,14 @@ export class UsersController{
 
     public deleteUser=(req:Request,resp:Response)=>{
         const id=+req.params.id
-        const post=this.userRepository.deleteById(id);
-        return resp.json(post);
+        const user=this.userRepository.deleteById(id);
+        return resp.json(user);
+    }
+
+    public login=async (req:Request,resp:Response)=> {
+        const [error,createUserDto]=CreateUserDto.create(req.body);  
+        const authService= new AuthService(this.userRepository);
+        const user= await authService.loginUser(createUserDto!);
+        return resp.json(user);
     }
 }

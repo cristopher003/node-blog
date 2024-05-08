@@ -7,6 +7,7 @@ import { PostRepository } from "../../domain/repositories/post.repository";
 export class PostRepositoryImpl implements PostRepository{
 
     constructor(private readonly datasource:PostDataSource){}
+ 
 
     create(createPostDto: CreatePostDto): Promise<PostEntity> {
         return this.datasource.create(createPostDto);
@@ -22,7 +23,13 @@ export class PostRepositoryImpl implements PostRepository{
     }
     deleteById(id: number): Promise<PostEntity> {
         return this.datasource.deleteById(id);
+    }
 
+    findByTag(tag: string): Promise<PostEntity[]> {
+        return this.datasource.findByTag(tag);
+    }
+    findByCategory(category: string): Promise<PostEntity[]> {
+        return this.datasource.findByCategory(category);
     }
 
 }
