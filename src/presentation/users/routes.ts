@@ -19,11 +19,11 @@ static get routes():Router{
     routes.post('/login',usersController.login);
 
     // todo
-    // configurar estas rutas
-    // routes.get('/:id',usersController.getUserById);
-    // routes.post('/',usersController.createUser);
-    // routes.put('/:id',usersController.updateUser);
-    // routes.delete('/:id',usersController.deleteUser);
+//configurar estas rutas
+    routes.get('/:id',usersController.getUserById);
+    routes.post('/',usersController.createUser);
+    routes.put('/:id',usersController.updateUser);
+    routes.delete('/:id',usersController.deleteUser);
 
 
     return routes;

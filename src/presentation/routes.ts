@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { PostRoutes } from "./posts/routes";
+import { ProductRoutes } from "./products/routes";
 import { UserRoutes } from "./users/routes";
 
 export class AppRoutes{
     static get routes():Router{
     const routes=Router();
-        routes.use('/post',PostRoutes.routes);
+        routes.use('/product',ProductRoutes.routes);
         routes.use('/user',UserRoutes.routes);
 
         return routes;

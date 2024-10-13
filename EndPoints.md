@@ -27,94 +27,53 @@ params :
 ```
 
 ----------------------------------
-POST 
-list posts - GET
+PRODUCT 
+
+``` 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBlZHJvM0Bob210YWlsLmNvbSIsImlhdCI6MTcyODY5NDE5NiwiZXhwIjoxNzI4NzAxMzk2fQ.so-OjG6_7xDYYKfH0n_sYO56Ab-Nc6gkLbb20biwqAs 
+```
+
+list products - GET
   ```
-http://localhost:3000/post
+http://localhost:3000/product
   ```
 
-create Post - POST
+create product - POST
   ```
-     http://localhost:3000/post
+     http://localhost:3000/product
    ```
 params :
 ```
-{
-  "title":"nuevo",
-  "content":"nuevo6",
-  "published":true,
-  "tags":["uno","dos"],
-  "categories":["uno","dos"],
-  "authorId":1
+{  "name":        "product33",
+  "description": "description"  , 
+  "stock" :      6,
+  "price"  :     6.6,
+  "categories": [
+    "uno",
+    "dos"
+    ]
 }
 ```
 
-update Post - PUT
+update product - PUT
   ```
-     http://localhost:3000/post/{id}
+     http://localhost:3000/product/{id}
    ```
 params :
 ```
-{
-  "id":2,
-  "title":"cambio",
-  "content":"nuevo6",
-  "published":true,
-  "categories":["uno","dos"],
-  "tags":["uno","dos"]
+{  "name":        "product33",
+  "description": "description"  , 
+  "stock" :      6,
+  "price"  :     6.6,
+  "categories": [
+    "uno",
+    "dos"
+    ]
 }
 ```
 
-delete Post - DELETE
+delete product - DELETE
   ```
-     http://localhost:3000/post/{id}
-   ```
-----------------------------------
-FILTER
-
-filter tag - GET
-  ```
-    http://localhost:3000/post/tags/{tag}
-   ```
-filter categories - GET
-  ```
-    http://localhost:3000/post/categories{categiria}
+    http://localhost:3000/product/{id}
    ```
 
-----------------------------------
-COMMENTS
-
-create comment - POST
-  ```
-http://localhost:3000/post/comment
-  ```
-  params:
-```
-{
-  "postId":1,
-  "authorId":1,
-  "content":"esto es un comentario"
-}
-  ```
-
-update comment - PUT
-  ```
-http://localhost:3000/post/comment/2
-  ```
-  params:
-
-```
-{
-  "postId":3,
-  "content":"esto es un nuevo comentario"
-}
-  ```
-list commets - GET
-  ```
-http://localhost:3000/post/comment
-  ```
-
-  delete comment - DELETE
-  ```
-     http://localhost:3000/post/comment/{id}
-   ```

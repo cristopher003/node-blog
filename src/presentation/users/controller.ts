@@ -11,26 +11,32 @@ export class UsersController{
     }
 
     public getUsers=async (req:Request,resp:Response)=> {
-        const post= await this.userRepository.getAll();
-        resp.json(post);
+        const user= await this.userRepository.getAll();
+        resp.json(user);
     }
 
     public getUserById=async(req:Request,resp:Response)=>{
         const id=+req.params.id
         try {
-            const post= await this.userRepository.findById(id);
-            return resp.json(post);
+            const user= await this.userRepository.findById(id);
+            return resp.json(user);
         } catch (error) {
             resp.status(400).json(error);
         }
     }
 
     public createUser=async (req:Request,resp:Response)=>{
-        const [error,createUserDto]=CreateUserDto.create(req.body);  
-        if (error) return resp.status(400).json({error});
-        const authService= new AuthService(this.userRepository);
-        const post= await authService.register(createUserDto!);
-        resp.json(post);
+        try {
+            const [error,createUserDto]=CreateUserDto.create(req.body);  
+            if (error) return resp.status(400).json({error});
+            const authService= new AuthService(this.userRepository);
+            const user= await authService.register(createUserDto!);
+            resp.json(user);  
+        } catch (error) {
+        return resp.json({error});
+            
+        }
+
     }
 
     public updateUser=(req:Request,resp:Response)=>{
@@ -38,9 +44,9 @@ export class UsersController{
         const [error,updateUserDto]=UpdateUserDto.create({...req.body,id}); 
         if (error) return resp.status(400).json({error});
      
-        const updatePost=this.userRepository.updateById(updateUserDto!);
+        const updateUser=this.userRepository.updateById(updateUserDto!);
 
-       return resp.json(updatePost);
+       return resp.json(updateUser);
     }
 
     public deleteUser=(req:Request,resp:Response)=>{
@@ -51,8 +57,14 @@ export class UsersController{
 
     public login=async (req:Request,resp:Response)=> {
         const [error,createUserDto]=CreateUserDto.create(req.body);  
-        const authService= new AuthService(this.userRepository);
-        const user= await authService.loginUser(createUserDto!);
-        return resp.json(user);
+        try {
+            const authService= new AuthService(this.userRepository);
+            const user= await authService.loginUser(createUserDto!);
+             return resp.json(user);
+        } catch (error) {
+        return resp.json({error});
+
+        }
+     
     }
 }

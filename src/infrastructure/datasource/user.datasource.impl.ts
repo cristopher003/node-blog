@@ -6,17 +6,17 @@ import { UserEntity } from "../../domain/entities/user.entity";
 
 export class UserDataSourceImp implements UserDataSource {
 
-   async create(createPostDto: CreateUserDto): Promise<UserEntity> {
+   async create(createUserDto: CreateUserDto): Promise<UserEntity> {
         const user= await prisma.user.create({
-            data:createPostDto!
+            data:createUserDto!
         })
 
       return UserEntity.fromJson(user);
     }
     
     async getAll(): Promise<UserEntity[]> {
-        const post= await prisma.user.findMany();
-        return post.map(post=>UserEntity.fromJson(post));
+        const user= await prisma.user.findMany();
+        return user.map(user=>UserEntity.fromJson(user));
     }
 
     async findById(id: number): Promise<UserEntity> {
@@ -40,13 +40,13 @@ export class UserDataSourceImp implements UserDataSource {
     }
 
 
-   async updateById(updatePostDto: UpdateUserDto): Promise<UserEntity> {
-       await this.findById(updatePostDto.id);
-       const updatePost= await prisma.user.update({
-        where:{id:updatePostDto.id},
-        data:updatePostDto.values
+   async updateById(updateUserDto: UpdateUserDto): Promise<UserEntity> {
+       await this.findById(updateUserDto.id);
+       const updateUser= await prisma.user.update({
+        where:{id:updateUserDto.id},
+        data:updateUserDto.values
     });
-    return UserEntity.fromJson(updatePost);
+    return UserEntity.fromJson(updateUser);
     }
 
     async deleteById(id: number): Promise<UserEntity> {

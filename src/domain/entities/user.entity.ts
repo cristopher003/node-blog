@@ -1,5 +1,3 @@
-import { CommentEntity } from "./comment.entity";
-import { PostEntity } from "./post.entity";
 
 export class UserEntity{
 constructor(
