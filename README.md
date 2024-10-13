@@ -11,8 +11,3 @@
 
 los endpoints se encuentran especificados en el archivo endPoints.ms
 
-## Cosas a Mejorar
-* Menejo de error
-* Arquitectura
-* crear contrato de api
-* Test
